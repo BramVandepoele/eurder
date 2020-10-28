@@ -1,10 +1,13 @@
 package com.switchfully.bram.eurder.services;
 
+import com.switchfully.bram.eurder.dto.GetCustomerDto;
 import com.switchfully.bram.eurder.exceptions.CustomerCreationFailedException;
 import com.switchfully.bram.eurder.instances.person.Customer;
 import com.switchfully.bram.eurder.repositories.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Collection;
 
 @Service
 public class CustomerService {
@@ -48,5 +51,9 @@ public class CustomerService {
     private void emailValidation(String email) {
         String regex = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
         if(!email.matches(regex))throw new CustomerCreationFailedException(Customer.class, "invalid format of email", email);
+    }
+
+    public Collection<Customer> getAll() {
+        return customerRepository.getAll();
     }
 }
