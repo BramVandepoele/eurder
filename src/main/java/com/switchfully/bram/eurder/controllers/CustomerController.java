@@ -46,7 +46,7 @@ public class CustomerController {
     public Collection<GetCustomerDto> getAll(@RequestParam(required = false) String adminId) throws NotAuthorizedException {
         myLogger.info("List of all customers was requested.");
         if (adminId == null || !AdminRepository.getAdministrators().containsKey(adminId)) {
-            throw new NotAuthorizedException(Admin.class, "AdminId incorrect", adminId);
+            throw new NotAuthorizedException(Admin.class, "AdminId", adminId);
         }
 
         return customerService.getAll().stream()
@@ -61,9 +61,12 @@ public class CustomerController {
 
     @GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
-    public GetCustomerInfoDto getById(@PathVariable String id) {
+    public GetCustomerInfoDto getById(@RequestParam(required = false) String adminId, @PathVariable String id) throws NotAuthorizedException {
         Customer customer = customerService.getById(id);
         myLogger.info("Customer requested with id {}.", customer.getId());
+        if (adminId == null || !AdminRepository.getAdministrators().containsKey(adminId)) {
+            throw new NotAuthorizedException(Admin.class, "AdminId", adminId);
+        }
 
         return new GetCustomerInfoDto()
                 .setId(customer.getId())
