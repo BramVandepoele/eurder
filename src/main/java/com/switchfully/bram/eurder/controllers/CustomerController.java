@@ -1,12 +1,12 @@
 package com.switchfully.bram.eurder.controllers;
 
-import com.switchfully.bram.eurder.dto.AddressDto;
-import com.switchfully.bram.eurder.dto.CreateCustomerDto;
-import com.switchfully.bram.eurder.dto.GetCustomerDto;
-import com.switchfully.bram.eurder.dto.PhoneNumberDto;
+import com.switchfully.bram.eurder.dto.*;
+import com.switchfully.bram.eurder.exceptions.NotAuthorizedException;
 import com.switchfully.bram.eurder.instances.Address;
 import com.switchfully.bram.eurder.instances.PhoneNumber;
+import com.switchfully.bram.eurder.instances.person.Admin;
 import com.switchfully.bram.eurder.instances.person.Customer;
+import com.switchfully.bram.eurder.repositories.AdminRepository;
 import com.switchfully.bram.eurder.services.CustomerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,26 +43,42 @@ public class CustomerController {
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
-    public Collection<GetCustomerDto> getAll() {
+    public Collection<GetCustomerDto> getAll(@RequestParam(required = false) String adminId) throws NotAuthorizedException {
         myLogger.info("List of all customers was requested.");
+        if (adminId == null || !AdminRepository.getAdministrators().containsKey(adminId)) {
+            throw new NotAuthorizedException(Admin.class, "AdminId incorrect", adminId);
+        }
 
         return customerService.getAll().stream()
                 .map(customer -> new GetCustomerDto()
+                        .setId(customer.getId())
                         .setFirstName(customer.getFirstName())
-                        .setLastName(customer.getLastName())
-                        .setEmail(customer.getEmail())
-                        .setAddress(new AddressDto()
-                                .setStreetName(customer.getAddress().getStreetName())
-                                .setHouseNumber(customer.getAddress().getHouseNumber())
-                                .setPostalCode(customer.getAddress().getPostalCode())
-                                .setCity(customer.getAddress().getCity()))
-                        .setPhoneNumber(new PhoneNumberDto()
-                                .setCountryCode(customer.getPhoneNumber().getCountryCode())
-                                .setPhoneNumber(customer.getPhoneNumber().getPhoneNumber()))
-                )
-                        .collect(Collectors.toList());
+                        .setLastName(customer.getLastName()))
+                .collect(Collectors.toList());
 
 
     }
+
+    @GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    public GetCustomerInfoDto getById(@PathVariable String id) {
+        Customer customer = customerService.getById(id);
+        myLogger.info("Customer requested with id {}.", customer.getId());
+
+        return new GetCustomerInfoDto()
+                .setId(customer.getId())
+                .setFirstName(customer.getFirstName())
+                .setLastName(customer.getLastName())
+                .setAddress(new AddressDto()
+                        .setStreetName(customer.getAddress().getStreetName())
+                        .setHouseNumber(customer.getAddress().getHouseNumber())
+                        .setPostalCode(customer.getAddress().getPostalCode())
+                        .setCity(customer.getAddress().getCity()))
+                .setEmail(customer.getEmail())
+                .setPhoneNumber(new PhoneNumberDto()
+                        .setCountryCode(customer.getPhoneNumber().getCountryCode())
+                        .setPhoneNumber(customer.getPhoneNumber().getPhoneNumber()));
+    }
+
 
 }

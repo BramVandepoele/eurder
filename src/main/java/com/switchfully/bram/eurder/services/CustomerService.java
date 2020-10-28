@@ -1,7 +1,7 @@
 package com.switchfully.bram.eurder.services;
 
-import com.switchfully.bram.eurder.dto.GetCustomerDto;
 import com.switchfully.bram.eurder.exceptions.CustomerCreationFailedException;
+import com.switchfully.bram.eurder.exceptions.EntityNotFoundException;
 import com.switchfully.bram.eurder.instances.person.Customer;
 import com.switchfully.bram.eurder.repositories.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,5 +55,13 @@ public class CustomerService {
 
     public Collection<Customer> getAll() {
         return customerRepository.getAll();
+    }
+
+    public Customer getById(String id) {
+        Customer customer = customerRepository.getById(id);
+        if(customer == null){
+            throw new EntityNotFoundException(Customer.class, "Id not found" , id);
+        }
+        return customer;
     }
 }

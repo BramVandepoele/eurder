@@ -1,6 +1,5 @@
 package com.switchfully.bram.eurder.repositories;
 
-import com.switchfully.bram.eurder.dto.GetCustomerDto;
 import com.switchfully.bram.eurder.exceptions.CustomerCreationFailedException;
 import com.switchfully.bram.eurder.instances.person.Customer;
 import org.springframework.stereotype.Repository;
@@ -32,5 +31,9 @@ public class CustomerRepository {
 
     public Collection<Customer> getAll() {
         return new ArrayList<>(customers.values());
+    }
+
+    public Customer getById(String id) {
+        return customers.get(id);
     }
 }
