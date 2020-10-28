@@ -2,8 +2,8 @@ package com.switchfully.bram.eurder.controllers;
 
 import com.switchfully.bram.eurder.dto.*;
 import com.switchfully.bram.eurder.exceptions.NotAuthorizedException;
-import com.switchfully.bram.eurder.instances.Address;
-import com.switchfully.bram.eurder.instances.PhoneNumber;
+import com.switchfully.bram.eurder.instances.valueObjects.Address;
+import com.switchfully.bram.eurder.instances.valueObjects.PhoneNumber;
 import com.switchfully.bram.eurder.instances.person.Admin;
 import com.switchfully.bram.eurder.instances.person.Customer;
 import com.switchfully.bram.eurder.repositories.AdminRepository;
@@ -33,7 +33,7 @@ public class CustomerController {
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public void createCustomer(@RequestBody CreateCustomerDto createCustomerDto) {
-        myLogger.info("Creation of new member requested.");
+        myLogger.info("Creation of new customer requested.");
         Address address = new Address(createCustomerDto.getStreetName(), createCustomerDto.getHouseNumber(), createCustomerDto.getCity(), createCustomerDto.getPostalCode());
         PhoneNumber phoneNumber = new PhoneNumber(createCustomerDto.getCountryCode(), createCustomerDto.getPhoneNumber());
         Customer newCustomer = new Customer(createCustomerDto.getFirstName(), createCustomerDto.getLastName(), createCustomerDto.getEmail(), address, phoneNumber);

@@ -1,4 +1,4 @@
-package com.switchfully.bram.eurder.instances;
+package com.switchfully.bram.eurder.instances.valueObjects;
 
 public class Address {
     private final String streetName;

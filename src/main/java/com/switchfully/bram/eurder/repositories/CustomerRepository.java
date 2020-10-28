@@ -1,6 +1,6 @@
 package com.switchfully.bram.eurder.repositories;
 
-import com.switchfully.bram.eurder.exceptions.CustomerCreationFailedException;
+import com.switchfully.bram.eurder.exceptions.CreationFailedException;
 import com.switchfully.bram.eurder.instances.person.Customer;
 import org.springframework.stereotype.Repository;
 
@@ -25,7 +25,7 @@ public class CustomerRepository {
     private void checkEmailIsUnique(Customer customer) {
         if(customers.values().stream()
         .anyMatch(customer1 -> customer1.getEmail().equals(customer.getEmail()))){
-            throw new CustomerCreationFailedException(Customer.class, "E-mail address already in use", customer.getEmail());
+            throw new CreationFailedException(Customer.class, "E-mail address already in use", customer.getEmail());
         }
     }
 

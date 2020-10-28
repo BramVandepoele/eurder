@@ -1,6 +1,6 @@
 package com.switchfully.bram.eurder.services;
 
-import com.switchfully.bram.eurder.exceptions.CustomerCreationFailedException;
+import com.switchfully.bram.eurder.exceptions.CreationFailedException;
 import com.switchfully.bram.eurder.exceptions.EntityNotFoundException;
 import com.switchfully.bram.eurder.instances.person.Customer;
 import com.switchfully.bram.eurder.repositories.CustomerRepository;
@@ -28,29 +28,29 @@ public class CustomerService {
     }
 
     private void phoneNumberValidation(Customer customer) {
-        if(customer.getPhoneNumber().getCountryCode().isBlank()) throw new CustomerCreationFailedException(Customer.class, "invalid country code" , customer.getPhoneNumber().getCountryCode());
-        if(customer.getPhoneNumber().getPhoneNumber() < 100000) throw new CustomerCreationFailedException(Customer.class, "invalid phone number" , String.valueOf(customer.getPhoneNumber().getPhoneNumber()));
+        if(customer.getPhoneNumber().getCountryCode().isBlank()) throw new CreationFailedException(Customer.class, "invalid country code" , customer.getPhoneNumber().getCountryCode());
+        if(customer.getPhoneNumber().getPhoneNumber() < 100000) throw new CreationFailedException(Customer.class, "invalid phone number" , String.valueOf(customer.getPhoneNumber().getPhoneNumber()));
 
     }
 
     private void addressValidation(Customer customer) {
-       if(customer.getAddress().getStreetName().isBlank()) throw new CustomerCreationFailedException(Customer.class, "invalid street name" , customer.getAddress().getStreetName());
-       if(customer.getAddress().getHouseNumber().isBlank()) throw new CustomerCreationFailedException(Customer.class, "invalid house number" , customer.getAddress().getHouseNumber());
-       if(customer.getAddress().getCity().isBlank()) throw new CustomerCreationFailedException(Customer.class, "invalid city name" , customer.getAddress().getCity());
-       if(customer.getAddress().getPostalCode() < 1000) throw new CustomerCreationFailedException(Customer.class, "invalid postal code" , String.valueOf(customer.getAddress().getPostalCode()));
+       if(customer.getAddress().getStreetName().isBlank()) throw new CreationFailedException(Customer.class, "invalid street name" , customer.getAddress().getStreetName());
+       if(customer.getAddress().getHouseNumber().isBlank()) throw new CreationFailedException(Customer.class, "invalid house number" , customer.getAddress().getHouseNumber());
+       if(customer.getAddress().getCity().isBlank()) throw new CreationFailedException(Customer.class, "invalid city name" , customer.getAddress().getCity());
+       if(customer.getAddress().getPostalCode() < 1000) throw new CreationFailedException(Customer.class, "invalid postal code" , String.valueOf(customer.getAddress().getPostalCode()));
     }
 
     private void lastNameValidation(Customer customer) {
-       if(customer.getLastName().isEmpty()) throw new CustomerCreationFailedException(Customer.class, "invalid last name", customer.getLastName());
+       if(customer.getLastName().isEmpty()) throw new CreationFailedException(Customer.class, "invalid last name", customer.getLastName());
     }
 
     private void firstNameValidation(Customer customer) {
-       if(customer.getFirstName().isBlank()) throw new CustomerCreationFailedException(Customer.class, "invalid first name", customer.getFirstName());
+       if(customer.getFirstName().isBlank()) throw new CreationFailedException(Customer.class, "invalid first name", customer.getFirstName());
     }
 
     private void emailValidation(String email) {
         String regex = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
-        if(!email.matches(regex))throw new CustomerCreationFailedException(Customer.class, "invalid format of email", email);
+        if(!email.matches(regex))throw new CreationFailedException(Customer.class, "invalid format of email", email);
     }
 
     public Collection<Customer> getAll() {

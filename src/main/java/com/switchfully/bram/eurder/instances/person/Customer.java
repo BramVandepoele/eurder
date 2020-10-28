@@ -1,7 +1,7 @@
 package com.switchfully.bram.eurder.instances.person;
 
-import com.switchfully.bram.eurder.instances.Address;
-import com.switchfully.bram.eurder.instances.PhoneNumber;
+import com.switchfully.bram.eurder.instances.valueObjects.Address;
+import com.switchfully.bram.eurder.instances.valueObjects.PhoneNumber;
 
 public class Customer extends Person {
     private final Address address;
