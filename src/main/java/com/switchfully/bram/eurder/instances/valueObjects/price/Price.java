@@ -13,6 +13,10 @@ public class Price {
         return value;
     }
 
+    public Currency getCurrency() {
+        return currency;
+    }
+
     @Override
     public String toString() {
         return value + " " + currency;

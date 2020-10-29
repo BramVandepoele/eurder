@@ -1,10 +1,13 @@
 package com.switchfully.bram.eurder.services;
 
+import com.switchfully.bram.eurder.controllers.GetItemDto;
 import com.switchfully.bram.eurder.exceptions.CreationFailedException;
 import com.switchfully.bram.eurder.instances.Item;
 import com.switchfully.bram.eurder.repositories.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Collection;
 
 @Service
 public class ItemService {
@@ -37,5 +40,9 @@ public class ItemService {
 
     private void validateAmount(Item item) {
         if(item.getAmount() < 1) throw new CreationFailedException(ItemService.class, "invalid amount", String.valueOf(item.getAmount()));
+    }
+
+    public Collection<Item> getAll() {
+        return itemRepository.getAll();
     }
 }

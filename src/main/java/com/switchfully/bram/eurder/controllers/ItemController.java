@@ -14,6 +14,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collection;
+import java.util.stream.Collectors;
+
 @RestController
 @RequestMapping(path = "/items")
 public class ItemController {
@@ -36,5 +39,18 @@ public class ItemController {
         Price price = new Price(createItemDto.getPriceValue(), createItemDto.getCurrency());
         Item newItem = new Item(createItemDto.getName(), createItemDto.getDescription(), price, createItemDto.getAmount());
         itemService.addItem(newItem);
+    }
+
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    public Collection<GetItemDto> getAll(){
+        return itemService.getAll().stream()
+                .map(item -> new GetItemDto()
+                .setItemId(item.getItemId())
+                .setName(item.getName())
+                .setDescription(item.getDescription())
+                .setPrice(item.getPrice())
+                .setAmount(item.getAmount()))
+                .collect(Collectors.toList());
     }
 }

@@ -1,6 +1,7 @@
 package com.switchfully.bram.eurder.repositories;
 
 import com.switchfully.bram.eurder.exceptions.CreationFailedException;
+import com.switchfully.bram.eurder.exceptions.EntityNotFoundException;
 import com.switchfully.bram.eurder.instances.person.Customer;
 import org.springframework.stereotype.Repository;
 
@@ -34,6 +35,11 @@ public class CustomerRepository {
     }
 
     public Customer getById(String id) {
+        assertIdExists(id);
         return customers.get(id);
+    }
+
+    private void assertIdExists(String id) {
+        if(customers.get(id) == null) throw new EntityNotFoundException(CustomerRepository.class, "CustomerId not found", id);
     }
 }
