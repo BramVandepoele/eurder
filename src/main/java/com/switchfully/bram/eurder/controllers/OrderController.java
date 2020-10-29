@@ -4,7 +4,6 @@ import com.switchfully.bram.eurder.dto.CreateOrderDto;
 import com.switchfully.bram.eurder.dto.GetOrderDto;
 import com.switchfully.bram.eurder.instances.orders.ItemGroup;
 import com.switchfully.bram.eurder.instances.orders.Order;
-import com.switchfully.bram.eurder.instances.valueObjects.price.Currency;
 import com.switchfully.bram.eurder.instances.valueObjects.price.Price;
 import com.switchfully.bram.eurder.services.OrderService;
 import org.slf4j.Logger;
@@ -64,7 +63,7 @@ public class OrderController {
         for (ItemGroup itemGroup : itemGroups) {
             total += orderService.calculatePrice(itemGroup.getItemID(), itemGroup.getAmount());
         }
-        return new Price(total, Currency.EUR);
+        return new Price(total);
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)

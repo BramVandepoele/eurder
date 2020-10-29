@@ -1,5 +1,7 @@
 package com.switchfully.bram.eurder.instances.orders;
 
+import com.switchfully.bram.eurder.exceptions.CreationFailedException;
+
 import java.time.LocalDate;
 
 public class ItemGroup {
@@ -9,7 +11,14 @@ public class ItemGroup {
 
     public ItemGroup(String itemID, int amount) {
         this.itemID = itemID;
-        this.amount = amount;
+        this.amount = checkAmount(amount);
+    }
+
+    private int checkAmount(int amount) {
+        if(amount <=0){
+            throw new CreationFailedException(ItemGroup.class, "amount not valid" , String.valueOf(amount));
+        }
+        return amount;
     }
 
     public String getItemID() {

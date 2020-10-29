@@ -1,8 +1,6 @@
-package com.switchfully.bram.eurder.controllers;
+package com.switchfully.bram.eurder.dto;
 
 import com.switchfully.bram.eurder.instances.valueObjects.price.Price;
-
-import java.util.UUID;
 
 public class GetItemDto {
     private String itemId;

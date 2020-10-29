@@ -1,5 +1,7 @@
 package com.switchfully.bram.eurder.instances.valueObjects;
 
+import java.util.Objects;
+
 public class Address {
     private final String streetName;
     private final String houseNumber;
@@ -28,4 +30,16 @@ public class Address {
     public int getPostalCode() {
         return postalCode;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Address address = (Address) o;
+        return postalCode == address.postalCode &&
+                Objects.equals(streetName, address.streetName) &&
+                Objects.equals(houseNumber, address.houseNumber) &&
+                Objects.equals(city, address.city);
+    }
+
 }

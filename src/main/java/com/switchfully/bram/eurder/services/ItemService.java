@@ -1,6 +1,5 @@
 package com.switchfully.bram.eurder.services;
 
-import com.switchfully.bram.eurder.controllers.GetItemDto;
 import com.switchfully.bram.eurder.exceptions.CreationFailedException;
 import com.switchfully.bram.eurder.instances.Item;
 import com.switchfully.bram.eurder.repositories.ItemRepository;

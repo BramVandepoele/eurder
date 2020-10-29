@@ -1,6 +1,7 @@
 package com.switchfully.bram.eurder.controllers;
 
 import com.switchfully.bram.eurder.dto.CreateItemDto;
+import com.switchfully.bram.eurder.dto.GetItemDto;
 import com.switchfully.bram.eurder.exceptions.NotAuthorizedException;
 import com.switchfully.bram.eurder.instances.Item;
 import com.switchfully.bram.eurder.instances.person.Admin;
@@ -36,7 +37,7 @@ public class ItemController {
             throw new NotAuthorizedException(Admin.class, "AdminId", adminId);
         }
 
-        Price price = new Price(createItemDto.getPriceValue(), createItemDto.getCurrency());
+        Price price = new Price(createItemDto.getPriceValue());
         Item newItem = new Item(createItemDto.getName(), createItemDto.getDescription(), price, createItemDto.getAmount());
         itemService.addItem(newItem);
     }
