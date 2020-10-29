@@ -2,6 +2,7 @@ package com.switchfully.bram.eurder.controllers;
 
 import com.switchfully.bram.eurder.dto.CreateOrderDto;
 import com.switchfully.bram.eurder.dto.GetOrderDto;
+import com.switchfully.bram.eurder.exceptions.CreationFailedException;
 import com.switchfully.bram.eurder.instances.orders.ItemGroup;
 import com.switchfully.bram.eurder.instances.orders.Order;
 import com.switchfully.bram.eurder.instances.valueObjects.price.Price;
@@ -36,6 +37,7 @@ public class OrderController {
         checkCustomerId(createOrderDto.getCustomerId());
         for (ItemGroup itemGroup : createOrderDto.getItemGroups()) {
             checkItemId(itemGroup.getItemID());
+            checkAmount(itemGroup.getAmount());
         }
         Order newOrder = new Order(createOrderDto.getCustomerId(), createOrderDto.getItemGroups(), calculateTotalPrice(createOrderDto.getItemGroups()), calculateShippingDate(createOrderDto.getItemGroups()));
         orderService.addOrder(newOrder);
@@ -47,6 +49,10 @@ public class OrderController {
 
     private void checkCustomerId(String customerId) {
         orderService.checkCustomerId(customerId);
+    }
+
+    private void checkAmount(int amount){
+        if (amount <= 0) throw new CreationFailedException(OrderController.class, "amount invalid", String.valueOf(amount));
     }
 
     private LocalDate calculateShippingDate(List<ItemGroup> itemGroups) {

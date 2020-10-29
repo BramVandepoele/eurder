@@ -32,7 +32,7 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(CreationFailedException.class)
     protected ResponseEntity<Object> handleCustomerNotCreated(
             CreationFailedException ex) {
-        ApiError apiError = new ApiError(HttpStatus.CONFLICT);
+        ApiError apiError = new ApiError(HttpStatus.METHOD_NOT_ALLOWED);
         apiError.setMessage(ex.getMessage());
         myLogger.warn(ex.getMessage());
         return buildResponseEntity(apiError);

@@ -38,7 +38,7 @@ public class ItemService {
     }
 
     private void validateAmount(Item item) {
-        if(item.getAmount() < 1) throw new CreationFailedException(ItemService.class, "invalid amount", String.valueOf(item.getAmount()));
+        if(item.getAmount() <= 0) throw new CreationFailedException(ItemService.class, "invalid amount", String.valueOf(item.getAmount()));
     }
 
     public Collection<Item> getAll() {

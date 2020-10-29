@@ -22,13 +22,6 @@ import java.time.LocalDateTime;
             this.status = status;
         }
 
-        public ApiError(HttpStatus status, Throwable ex) {
-            this();
-            this.status = status;
-            this.message = "Unexpected error";
-            this.debugMessage = ex.getLocalizedMessage();
-        }
-
         public ApiError(HttpStatus status, String message, Throwable ex) {
             this();
             this.status = status;
@@ -40,24 +33,12 @@ import java.time.LocalDateTime;
             return status;
         }
 
-        public LocalDateTime getTimestamp() {
-            return timestamp;
-        }
-
         public String getMessage() {
             return message;
         }
 
-        public String getDebugMessage() {
-            return debugMessage;
-        }
-
         public void setMessage(String message) {
             this.message = message;
-        }
-
-        public void setDebugMessage(String debugMessage) {
-            this.debugMessage = debugMessage;
         }
 
     }

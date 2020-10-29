@@ -30,7 +30,7 @@ public class OrderService {
     }
 
     private void validateItemGroups(Order order) {
-        if(order.getItemGroups().size() == 0) throw new CreationFailedException(OrderService.class, "order is empty");
+        if(order.getItemGroups().size() == 0) throw new CreationFailedException(OrderService.class, "order is empty", "");
     }
 
     public Collection<Order> getAll() {
