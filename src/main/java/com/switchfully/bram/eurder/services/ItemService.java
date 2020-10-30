@@ -21,7 +21,7 @@ public class ItemService {
         validateName(item);
         validateDescription(item);
         validatePrice(item);
-        validateAmount(item);
+        validateStockAmount(item);
         itemRepository.addItem(item);
     }
 
@@ -37,7 +37,7 @@ public class ItemService {
         if(item.getPrice().getValue() <=0) throw new CreationFailedException(ItemService.class, "invalid price", item.getPrice().toString());
     }
 
-    private void validateAmount(Item item) {
+    private void validateStockAmount(Item item) {
         if(item.getAmount() <= 0) throw new CreationFailedException(ItemService.class, "invalid amount", String.valueOf(item.getAmount()));
     }
 

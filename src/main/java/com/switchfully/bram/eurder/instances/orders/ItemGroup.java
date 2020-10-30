@@ -11,10 +11,10 @@ public class ItemGroup {
 
     public ItemGroup(String itemID, int amount) {
         this.itemID = itemID;
-        this.amount = checkAmount(amount);
+        this.amount = checkOrderAmount(amount);
     }
 
-    private int checkAmount(int amount) {
+    private int checkOrderAmount(int amount) {
         if(amount <=0) throw new CreationFailedException(ItemGroup.class, "amount not valid", String.valueOf(amount));
         return amount;
     }
