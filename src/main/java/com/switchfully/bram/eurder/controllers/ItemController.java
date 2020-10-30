@@ -2,6 +2,7 @@ package com.switchfully.bram.eurder.controllers;
 
 import com.switchfully.bram.eurder.dto.CreateItemDto;
 import com.switchfully.bram.eurder.dto.GetItemDto;
+import com.switchfully.bram.eurder.dto.UpdateItemDto;
 import com.switchfully.bram.eurder.exceptions.NotAuthorizedException;
 import com.switchfully.bram.eurder.instances.items.Item;
 import com.switchfully.bram.eurder.instances.items.StockUrgency;
@@ -75,6 +76,23 @@ public class ItemController {
                             .setStockUrgency(item.getStockUrgency()))
                     .collect(Collectors.toList());
         }
+    }
 
+    @PutMapping (consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    public void updateItem(@RequestParam String itemId, @RequestParam (required = false) String adminId, @RequestBody UpdateItemDto updateItemDto) throws NotAuthorizedException {
+        myLogger.info("Item update requested.");
+
+        if (adminId == null || !AdminRepository.getAdministrators().containsKey(adminId)) {
+            throw new NotAuthorizedException(Admin.class, "AdminId", adminId);
+        }
+        Item itemToUpdate = (itemService.getAll().stream().filter(item -> item.getItemId().equals(itemId)).findAny().orElse(null));
+        itemService.assertItemNotNull(itemToUpdate, itemId);
+
+        itemToUpdate.setName(updateItemDto.getName());
+        itemToUpdate.setDescription(updateItemDto.getDescription());
+        itemToUpdate.setPrice(new Price(updateItemDto.getPriceValue()));
+        itemToUpdate.setAmount(updateItemDto.getAmount());
+        itemToUpdate.setStockUrgency(itemToUpdate.calculateStockUrgency(updateItemDto.getAmount()));
     }
 }

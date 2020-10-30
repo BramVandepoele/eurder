@@ -6,15 +6,15 @@ import com.switchfully.bram.eurder.instances.valueObjects.price.Currency;
 public class CreateItemDto {
     private String name;
     private String Description;
-    private int priceValue;
+    private double priceValue;
     private Currency currency = Currency.EUR;
     private int amount;
 
-    public int getPriceValue() {
+    public double getPriceValue() {
         return priceValue;
     }
 
-    public CreateItemDto setPriceValue(int priceValue) {
+    public CreateItemDto setPriceValue(double priceValue) {
         this.priceValue = priceValue;
         return this;
     }

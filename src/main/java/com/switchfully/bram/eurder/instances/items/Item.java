@@ -6,11 +6,11 @@ import java.util.UUID;
 
 public class Item {
     private final String itemId;
-    private final String name;
-    private final String Description;
-    private final Price price;
-    private final int amount;
-    private final StockUrgency stockUrgency;
+    private  String name;
+    private  String Description;
+    private Price price;
+    private int amount;
+    private StockUrgency stockUrgency;
 
     public Item(String name, String description, Price price, int amount) {
         this.itemId = UUID.randomUUID().toString();
@@ -18,10 +18,10 @@ public class Item {
         Description = description;
         this.price = price;
         this.amount = amount;
-        this.stockUrgency = setStockUrgency(amount);
+        this.stockUrgency = calculateStockUrgency(amount);
     }
 
-    private StockUrgency setStockUrgency(int amount) {
+    public StockUrgency calculateStockUrgency(int amount) {
         if(amount < 5) return StockUrgency.STOCK_LOW;
         if(amount < 10) return StockUrgency.STOCK_MEDIUM;
         return StockUrgency.STOCK_HIGH;
@@ -47,7 +47,29 @@ public class Item {
         return amount;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDescription(String description) {
+        Description = description;
+    }
+
+    public void setPrice(Price price) {
+        this.price = price;
+    }
+
+    public void setStockUrgency(StockUrgency stockUrgency) {
+        this.stockUrgency = stockUrgency;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
+
     public StockUrgency getStockUrgency() {
         return stockUrgency;
+
+
     }
 }

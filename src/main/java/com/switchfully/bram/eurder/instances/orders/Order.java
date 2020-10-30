@@ -21,10 +21,6 @@ public class Order {
         this.totalPrice = totalPrice;
     }
 
-    public void setTotalPrice(double totalPrice) {
-
-    }
-
     public List<ItemGroup> getItemGroups() {
         return itemGroups;
     }

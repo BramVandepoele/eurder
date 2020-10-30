@@ -1,6 +1,7 @@
 package com.switchfully.bram.eurder.services;
 
 import com.switchfully.bram.eurder.exceptions.CreationFailedException;
+import com.switchfully.bram.eurder.exceptions.EntityNotFoundException;
 import com.switchfully.bram.eurder.instances.items.Item;
 import com.switchfully.bram.eurder.repositories.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,5 +44,9 @@ public class ItemService {
 
     public Collection<Item> getAll() {
         return itemRepository.getAll();
+    }
+
+    public void assertItemNotNull(Item item, String searchId) {
+        if(item==null) throw new EntityNotFoundException(ItemService.class, "Item not found for Id", searchId);
     }
 }
