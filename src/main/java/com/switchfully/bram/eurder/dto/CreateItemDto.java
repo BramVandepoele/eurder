@@ -1,5 +1,6 @@
 package com.switchfully.bram.eurder.dto;
 
+import com.switchfully.bram.eurder.instances.items.StockUrgency;
 import com.switchfully.bram.eurder.instances.valueObjects.price.Currency;
 
 public class CreateItemDto {
@@ -8,7 +9,6 @@ public class CreateItemDto {
     private int priceValue;
     private Currency currency = Currency.EUR;
     private int amount;
-
 
     public int getPriceValue() {
         return priceValue;

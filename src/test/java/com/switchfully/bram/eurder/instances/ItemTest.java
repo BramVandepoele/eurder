@@ -1,10 +1,9 @@
 package com.switchfully.bram.eurder.instances;
 
+import com.switchfully.bram.eurder.instances.items.Item;
 import com.switchfully.bram.eurder.instances.valueObjects.price.Price;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class ItemTest {
     @Test

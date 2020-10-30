@@ -1,8 +1,7 @@
 package com.switchfully.bram.eurder.repositories;
 
-import com.switchfully.bram.eurder.exceptions.CreationFailedException;
 import com.switchfully.bram.eurder.exceptions.EntityNotFoundException;
-import com.switchfully.bram.eurder.instances.Item;
+import com.switchfully.bram.eurder.instances.items.Item;
 import org.springframework.stereotype.Repository;
 
 import java.util.*;

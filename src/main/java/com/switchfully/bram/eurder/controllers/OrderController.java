@@ -37,7 +37,6 @@ public class OrderController {
         checkCustomerId(createOrderDto.getCustomerId());
         for (ItemGroup itemGroup : createOrderDto.getItemGroups()) {
             checkItemId(itemGroup.getItemID());
-            checkAmount(itemGroup.getAmount());
         }
         Order newOrder = new Order(createOrderDto.getCustomerId(), createOrderDto.getItemGroups(), calculateTotalPrice(createOrderDto.getItemGroups()), calculateShippingDate(createOrderDto.getItemGroups()));
         orderService.addOrder(newOrder);
@@ -49,10 +48,6 @@ public class OrderController {
 
     private void checkCustomerId(String customerId) {
         orderService.checkCustomerId(customerId);
-    }
-
-    private void checkAmount(int amount){
-        if (amount <= 0) throw new CreationFailedException(OrderController.class, "amount invalid", String.valueOf(amount));
     }
 
     private LocalDate calculateShippingDate(List<ItemGroup> itemGroups) {

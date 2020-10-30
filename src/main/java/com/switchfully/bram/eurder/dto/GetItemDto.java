@@ -1,5 +1,6 @@
 package com.switchfully.bram.eurder.dto;
 
+import com.switchfully.bram.eurder.instances.items.StockUrgency;
 import com.switchfully.bram.eurder.instances.valueObjects.price.Price;
 
 public class GetItemDto {
@@ -8,6 +9,16 @@ public class GetItemDto {
     private String Description;
     private Price price;
     private int amount;
+    private StockUrgency stockUrgency;
+
+    public StockUrgency getStockUrgency() {
+        return stockUrgency;
+    }
+
+    public GetItemDto setStockUrgency(StockUrgency stockUrgency) {
+        this.stockUrgency = stockUrgency;
+        return this;
+    }
 
     public String getItemId() {
         return itemId;

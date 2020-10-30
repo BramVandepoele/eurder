@@ -1,7 +1,7 @@
 package com.switchfully.bram.eurder.services;
 
 import com.switchfully.bram.eurder.exceptions.CreationFailedException;
-import com.switchfully.bram.eurder.instances.Item;
+import com.switchfully.bram.eurder.instances.items.Item;
 import com.switchfully.bram.eurder.repositories.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

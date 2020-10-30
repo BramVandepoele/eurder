@@ -3,7 +3,8 @@ package com.switchfully.bram.eurder.controllers;
 import com.switchfully.bram.eurder.dto.CreateItemDto;
 import com.switchfully.bram.eurder.dto.GetItemDto;
 import com.switchfully.bram.eurder.exceptions.NotAuthorizedException;
-import com.switchfully.bram.eurder.instances.Item;
+import com.switchfully.bram.eurder.instances.items.Item;
+import com.switchfully.bram.eurder.instances.items.StockUrgency;
 import com.switchfully.bram.eurder.instances.person.Admin;
 import com.switchfully.bram.eurder.instances.valueObjects.price.Price;
 import com.switchfully.bram.eurder.repositories.AdminRepository;
@@ -16,6 +17,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.stream.Collectors;
 
 @RestController
@@ -44,14 +46,31 @@ public class ItemController {
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
-    public Collection<GetItemDto> getAll(){
-        return itemService.getAll().stream()
-                .map(item -> new GetItemDto()
-                .setItemId(item.getItemId())
-                .setName(item.getName())
-                .setDescription(item.getDescription())
-                .setPrice(item.getPrice())
-                .setAmount(item.getAmount()))
-                .collect(Collectors.toList());
+    public Collection<GetItemDto> getStockOverview(@RequestParam(required = false) StockUrgency stockUrgency){
+        if(!(stockUrgency==null)){
+            return itemService.getAll().stream()
+                    .filter(item -> item.getStockUrgency().equals(stockUrgency))
+                    .sorted(Comparator.comparingInt(Item::getAmount))
+                    .map(item -> new GetItemDto()
+                            .setItemId(item.getItemId())
+                            .setName(item.getName())
+                            .setDescription(item.getDescription())
+                            .setPrice(item.getPrice())
+                            .setAmount(item.getAmount())
+                            .setStockUrgency(item.getStockUrgency()))
+                    .collect(Collectors.toList());
+        }else{
+            return itemService.getAll().stream()
+                    .sorted(Comparator.comparingInt(Item::getAmount))
+                    .map(item -> new GetItemDto()
+                            .setItemId(item.getItemId())
+                            .setName(item.getName())
+                            .setDescription(item.getDescription())
+                            .setPrice(item.getPrice())
+                            .setAmount(item.getAmount())
+                            .setStockUrgency(item.getStockUrgency()))
+                    .collect(Collectors.toList());
+        }
+
     }
 }

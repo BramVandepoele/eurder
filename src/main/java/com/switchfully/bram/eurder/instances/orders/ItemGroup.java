@@ -15,9 +15,7 @@ public class ItemGroup {
     }
 
     private int checkAmount(int amount) {
-        if(amount <=0){
-            throw new CreationFailedException(ItemGroup.class, "amount not valid" , String.valueOf(amount));
-        }
+        if(amount <=0) throw new CreationFailedException(ItemGroup.class, "amount not valid", String.valueOf(amount));
         return amount;
     }
 
