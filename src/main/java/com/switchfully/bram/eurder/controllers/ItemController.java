@@ -46,7 +46,11 @@ public class ItemController {
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
-    public Collection<GetItemDto> getStockOverview(@RequestParam(required = false) StockUrgency stockUrgency){
+    public Collection<GetItemDto> getStockOverview(@RequestParam(required = false) String adminId, @RequestParam(required = false) StockUrgency stockUrgency) throws NotAuthorizedException {
+        myLogger.info("List of stock requested.");
+        if (adminId == null || !AdminRepository.getAdministrators().containsKey(adminId)) {
+            throw new NotAuthorizedException(Admin.class, "AdminId", adminId);
+        }
         if(!(stockUrgency==null)){
             return itemService.getAll().stream()
                     .filter(item -> item.getStockUrgency().equals(stockUrgency))
